@@ -1,0 +1,26 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  background-color: slategray;
+}
+
+.gameboard {
+  padding: 20px; 
+  box-sizing: border-box;
+  height: 340px;
+  width: 340px;
+  background-color: lightgoldenrodyellow;
+
+  display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  gap: 4px;
+}
+
+.index {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: sans-serif;
+}
