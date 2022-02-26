@@ -2,11 +2,14 @@
 const gameBoard = (() => {
   const gameArray = ['', '', '', '', '', '', '', '', ''];
   const pubNodeList = document.querySelectorAll('.index');
-  const attachHandler = (item) => {
+
+  const attachHandler = (item, index) => {
+    console.log(index);
     console.log(item);
-    item.addEventListener("click", handlerResponse);
+    item.addEventListener("click", handlerLog);
   }
-  const handlerResponse = () => {console.log('hii')}
+
+  const handlerLog = (e) => {console.log(e.target.classList[1])}
   pubNodeList.forEach(attachHandler);
   
   return {gameArray, pubNodeList};
@@ -22,15 +25,6 @@ const playerFactory = (name) => {
 
 const displayController = (() => {
   const pubVar = 'public hi';
-  
-
-/*   const privFunc = (item, index) => {
-    item.textContent = '_';
-  }
-  const fillBoard = () => {
-    pubNodeList.forEach(privFunc);
-    pubNodeList.forEach(attachHandler);
-  } */
   return {pubVar};
 })();
 
