@@ -3,7 +3,6 @@ const gameBoard = (() => {
   const gameArray = ['', '', '', '', '', '', '', '', ''];
   const pubNodeList = document.querySelectorAll('.index');
   // pubNodeList.forEach(attachHandler);
-  
   return {gameArray, pubNodeList};
 })();
 
@@ -21,15 +20,8 @@ const playerFactory = (name) => {
 
 
 const game = (() => {
-
-  const privFunc = (item, index) => {item.textContent = '_'}
   let turn = "one";
   const turnElement = document.querySelector(".turn");
-
-  const fillBoard = () => {
-    gameBoard.pubNodeList.forEach(privFunc);
-  }
-
   const attachHandler = (item, index) => {
     // console.log(index);
     // console.log(item);
@@ -40,20 +32,35 @@ const game = (() => {
   const changeTile = (item, index) => {
     // update clicked tile textContent
     console.log(item.target);
-    if (turn === "one") {
-      console.log("x");
-      item.target.textContent = 'X';
-      turn = "two";
-      turnElement.textContent = 'it is now player two\'s turn'
-    } else {
-      console.log("o");
-      item.target.textContent = 'O';
-      turn = "one";
-      turnElement.textContent = 'it is now player one\'s turn'
+    if (gameBoard.gameArray.every(element => element === true)) {// if all 9 tiles are filled, 
+      console.log("finished");
     }
-    //item.target.textContent = 'X';
+    if (turn === "one") {
+      if (!item.target.textContent) {
+        console.log("x");
+        gameBoard.gameArray[item.target.classList[1]] = "X";
+        item.target.textContent = 'X';
+        turn = "two";
+        turnElement.textContent = 'it is now player two\'s turn';
+      }
+    } else {
+      // duplicated code should be put into a function and then called twice
+      if (!item.target.textContent) {
+        console.log("o");
+        gameBoard.gameArray[item.target.classList[1]] = "O";
+        //gameBoard.gameArray[]
+        item.target.textContent = 'O';
+        turn = "one";
+        turnElement.textContent = 'it is now player one\'s turn';
+      }
+    }
+    if (gameBoard.gameArray.every(i => i)) {
+      // if all 9 tiles are filled, log "finished"
+      console.log("finished");
+    }
   }
-  return {changeTile, fillBoard, attachHandler}
+
+  return {changeTile, attachHandler}
 })();
 
 
@@ -65,4 +72,4 @@ gameBoard.pubNodeList.forEach(game.attachHandler);
 // gameBoard.pubNodeList.forEach(item.addEventListener("click", game.changeTile));
 
 // displayController.fillBoard();
-game.fillBoard();
+// game.fillBoard();
