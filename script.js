@@ -2,21 +2,9 @@
 const gameBoard = (() => {
   const gameArray = ['', '', '', '', '', '', '', '', ''];
   const pubNodeList = document.querySelectorAll('.index');
-
-  const attachHandler = (item, index) => {
-    console.log(index);
-    console.log(item);
-    item.addEventListener("click", handlerLog);
-  }
-
-  const handlerLog = (e) => {
-    console.log(e.target.classList[1])
-    e.target.textContent = 'X';
-  }
   // pubNodeList.forEach(attachHandler);
   
-  return {gameArray, pubNodeList, attachHandler};
-  
+  return {gameArray, pubNodeList};
 })();
 
 
@@ -26,26 +14,43 @@ const playerFactory = (name) => {
 };
 
 
-const displayController = (() => {
-  const pubVar = 'public hi';
-  return {pubVar};
-})();
+// const displayController = (() => {
+//   const pubVar = '???';
+//   return {pubVar};
+// })();
 
 
 const game = (() => {
 
   const privFunc = (item, index) => {item.textContent = '_'}
+  let turn = "one";
 
   const fillBoard = () => {
     gameBoard.pubNodeList.forEach(privFunc);
   }
 
-
-  const changeTile = () => {
-    // update clicked tile textContent
-    console.log('tile updated');
+  const attachHandler = (item, index) => {
+    // console.log(index);
+    // console.log(item);
+    item.addEventListener("click", changeTile);
   }
-  return {changeTile, fillBoard}
+
+
+  const changeTile = (item, index) => {
+    // update clicked tile textContent
+    console.log(item.target);
+    if (turn === "one") {
+      console.log("x");
+      item.target.textContent = 'X';
+      turn = "two";
+    } else {
+      console.log("o");
+      item.target.textContent = 'O';
+      turn = "one";
+    }
+    //item.target.textContent = 'X';
+  }
+  return {changeTile, fillBoard, attachHandler}
 })();
 
 
@@ -53,7 +58,8 @@ const game = (() => {
 const playerOne = playerFactory('Todd');
 const playerTwo = playerFactory('John');
 
-gameBoard.pubNodeList.forEach(gameBoard.attachHandler);
+gameBoard.pubNodeList.forEach(game.attachHandler);
+// gameBoard.pubNodeList.forEach(item.addEventListener("click", game.changeTile));
 
 // displayController.fillBoard();
 game.fillBoard();
