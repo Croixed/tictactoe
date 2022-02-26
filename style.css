@@ -22,6 +22,7 @@ body {
   box-sizing: border-box;
   height: 340px;
   width: 340px;
+  border-radius: 10px;
   background-color: var(--color-light);
 
   display: grid;

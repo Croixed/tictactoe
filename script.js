@@ -29,51 +29,47 @@ const game = (() => {
     item.addEventListener("click", changeTile);
   }
 
+  const playTurn = (item, symbol, player, toggle) => {
+    if (!item.target.textContent) {
+      gameBoard.gameArray[item.target.classList[1]] = symbol;
+      item.target.textContent = symbol;
+      turn = toggle;
+      turnElement.textContent = `it is now player ${player}\'s turn`;
+    }
+  }
+
+  const makeFooter = () => {
+    result = document.createElement("div");
+    result.classList.add("footer");
+
+    resultText = document.createElement("div");
+    resultText.textContent = "Game Over!";
+    result.appendChild(resultText);
+
+    resultButton = document.createElement("button");
+    resultButton.textContent = "Play Again";
+    resultButton.addEventListener("click", () => {location.reload()})
+    result.appendChild(resultButton);
+
+    body.appendChild(result);
+  }
 
   const changeTile = (item, index) => {
     // update clicked tile textContent
     console.log(item.target);
-    if (gameBoard.gameArray.every(element => element === true)) {// if all 9 tiles are filled, 
-      console.log("finished");
-    }
     if (turn === "one") {
-      if (!item.target.textContent) {
-        gameBoard.gameArray[item.target.classList[1]] = "X";
-        item.target.textContent = 'X';
-        turn = "two";
-        turnElement.textContent = 'it is now player two\'s turn';
-      }
+      playTurn(item, "X", "name2", "two")
     } else {
-      // duplicated code should be put into a function and then called twice
-      if (!item.target.textContent) {
-        gameBoard.gameArray[item.target.classList[1]] = "O";
-        item.target.textContent = 'O';
-        turn = "one";
-        turnElement.textContent = 'it is now player one\'s turn';
-      }
+      playTurn(item, "O", "name1", "one")
     }
-    // if all 9 tiles are filled, display the result footer
-    // or if someone wins early
+    // if all 9 tiles are filled, display the result footer, or if someone wins early
     if (gameBoard.gameArray.every(i => i)) {
-      result = document.createElement("div");
-      result.classList.add("footer");
-
-      resultText = document.createElement("div");
-      resultText.textContent = "Game Over!";
-      result.appendChild(resultText);
-
-      resultButton = document.createElement("button");
-      resultButton.textContent = "Play Again";
-      resultButton.addEventListener("click", () => {location.reload()})
-      result.appendChild(resultButton);
-
-      body.appendChild(result);
+      makeFooter();
     }
   }
 
   return {changeTile, attachHandler}
 })();
-
 
 
 const playerOne = playerFactory('Todd');
@@ -82,5 +78,3 @@ const playerTwo = playerFactory('John');
 gameBoard.pubNodeList.forEach(game.attachHandler);
 // gameBoard.pubNodeList.forEach(item.addEventListener("click", game.changeTile));
 
-// displayController.fillBoard();
-// game.fillBoard();
