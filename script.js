@@ -68,34 +68,36 @@ const game = (() => {
     newArr.push(arr[ind3]);
     return newArr
   }
+  let checkWinner = function(arr) {
+    if (allsame(arr.slice(3,6)) ||  
+        allsame(arr.slice(0,3)) ||
+        allsame(arr.slice(6,9)) ||
+        allsame(slicer(arr, 0, 3, 6)) ||
+        allsame(slicer(arr, 1, 4, 7)) ||
+        allsame(slicer(arr, 2, 5, 8)) ||
+        allsame(slicer(arr, 0, 4, 8)) ||
+        allsame(slicer(arr, 2, 4, 6))
+        ) {
+      console.log("it's equal");
+      makeFooter();
+    } 
+  }
   let counter = 0;
 
   const progressGame = (item, index) => {
-    // update clicked tile textContent
-    console.log(item.target);
+    // update clicked tile textContent //(item.target)
     counter++
-    console.log(counter);
     if (turn === "one") {
       playTurn(item, "X", "name2", "two")
     } else {
       playTurn(item, "O", "name1", "one")
     }
-    // if all 9 tiles are filled, display the result footer
-    //if (gameBoard.gameArray.every(i => i)) {makeFooter();}
-    if (counter === 9) {makeFooter();};
-    // this can't possibly be the best way to check for gameover
-    if (allsame(gameBoard.gameArray.slice(3,6)) ||  
-        allsame(gameBoard.gameArray.slice(0,3)) ||
-        allsame(gameBoard.gameArray.slice(6,9)) ||
-        allsame(slicer(gameBoard.gameArray, 0, 3, 6)) ||
-        allsame(slicer(gameBoard.gameArray, 1, 4, 7)) ||
-        allsame(slicer(gameBoard.gameArray, 2, 5, 8)) ||
-        allsame(slicer(gameBoard.gameArray, 0, 4, 8)) ||
-        allsame(slicer(gameBoard.gameArray, 2, 4, 6))
-        ) {
-      console.log("it's equal");
-      makeFooter();
-    } 
+    // if all 9 tiles are filled, display the result footer then exit progressGame
+    if (counter === 9) {
+      makeFooter()
+      return
+    };
+    checkWinner(gameBoard.gameArray); // this can't possibly be the best way to check for gameover
   }
 
   return {progressGame, attachHandler}
