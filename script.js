@@ -39,16 +39,16 @@ const game = (() => {
       gameBoard.gameArray[item.target.classList[1]] = symbol;
       item.target.textContent = symbol;
       turn = toggle;
-      turnElement.textContent = `it is now player ${player}\'s turn`;
+      turnElement.textContent = `it is now ${player}\'s turn`;
     }
   }
 
-  const makeFooter = () => {
+  const makeFooter = (temp) => {
     result = document.createElement("div");
     result.classList.add("footer");
 
     resultText = document.createElement("div");
-    resultText.textContent = "Game Over!";
+    resultText.textContent = `${temp}!` + " Game Over!";
     result.appendChild(resultText);
 
     resultButton = document.createElement("button");
@@ -78,8 +78,13 @@ const game = (() => {
         allsame(slicer(arr, 0, 4, 8)) ||
         allsame(slicer(arr, 2, 4, 6))
         ) {
+      // I should probably make a callback function like returnWinner()  or printWinner()
       console.log("it's equal");
-      makeFooter();
+      if (turn === "two") {
+        makeFooter(`${playerOne.name} won`);
+      } else {
+        makeFooter(`${playerTwo.name} won`); // game over
+      }
     } 
   }
   let counter = 0;
@@ -88,13 +93,12 @@ const game = (() => {
     // update clicked tile textContent //(item.target)
     counter++
     if (turn === "one") {
-      playTurn(item, "X", "name2", "two")
+      playTurn(item, "X", playerTwo.name, "two")
     } else {
-      playTurn(item, "O", "name1", "one")
+      playTurn(item, "O", playerOne.name, "one")
     }
-    // if all 9 tiles are filled, display the result footer then exit progressGame
-    if (counter === 9) {
-      makeFooter()
+    if (counter === 9) { // if all 9 are filled, display the result footer then exit progressGame
+      makeFooter('tie')
       return
     };
     checkWinner(gameBoard.gameArray); // this can't possibly be the best way to check for gameover
@@ -104,9 +108,8 @@ const game = (() => {
 })();
 
 
-const playerOne = playerFactory('Todd');
-const playerTwo = playerFactory('John');
+const playerOne = playerFactory('Player one');
+const playerTwo = playerFactory('Player two');
 
 gameBoard.pubNodeList.forEach(game.attachHandler);
 // gameBoard.pubNodeList.forEach(item.addEventListener("click", game.changeTile));
-
