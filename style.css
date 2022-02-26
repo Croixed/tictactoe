@@ -1,7 +1,12 @@
+:root {
+  --color-dark: #164e63;
+  --color-med: #0891b2;
+  --color-light: #22d3ee;
+}
+
 * {
   margin: 0px;
   padding: 0px;
-  background-color: slategray;
 }
 
 body {
@@ -9,6 +14,7 @@ body {
   flex-direction: column;
   align-items: center;
   user-select: none;
+  background-color: var(--color-dark);
 }
 
 .gameboard {
@@ -16,7 +22,7 @@ body {
   box-sizing: border-box;
   height: 340px;
   width: 340px;
-  background-color: lightgoldenrodyellow;
+  background-color: var(--color-light);
 
   display: grid;
   grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
@@ -24,7 +30,9 @@ body {
 }
 
 .title, 
-.turn {
+.turn,
+.footer,
+button {
   color: white;
   width: 340px;
   margin: 10px;
@@ -45,4 +53,15 @@ body {
   font-size: 2rem;
   font-weight: bold;
   font-family: sans-serif;
+  background-color: var(--color-dark);
+  color: #ecfeff;
+}
+
+button {
+  height: 50px;
+  width: 130px;
+  color: white;
+  background-color: var(--color-med);
+  border-radius: 10px;
+  border-width: 3px;
 }

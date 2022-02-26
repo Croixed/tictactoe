@@ -20,6 +20,7 @@ const playerFactory = (name) => {
 
 
 const game = (() => {
+  const body = document.querySelector("body");
   let turn = "one";
   const turnElement = document.querySelector(".turn");
   const attachHandler = (item, index) => {
@@ -37,7 +38,6 @@ const game = (() => {
     }
     if (turn === "one") {
       if (!item.target.textContent) {
-        console.log("x");
         gameBoard.gameArray[item.target.classList[1]] = "X";
         item.target.textContent = 'X';
         turn = "two";
@@ -46,17 +46,28 @@ const game = (() => {
     } else {
       // duplicated code should be put into a function and then called twice
       if (!item.target.textContent) {
-        console.log("o");
         gameBoard.gameArray[item.target.classList[1]] = "O";
-        //gameBoard.gameArray[]
         item.target.textContent = 'O';
         turn = "one";
         turnElement.textContent = 'it is now player one\'s turn';
       }
     }
+    // if all 9 tiles are filled, display the result footer
+    // or if someone wins early
     if (gameBoard.gameArray.every(i => i)) {
-      // if all 9 tiles are filled, log "finished"
-      console.log("finished");
+      result = document.createElement("div");
+      result.classList.add("footer");
+
+      resultText = document.createElement("div");
+      resultText.textContent = "Game Over!";
+      result.appendChild(resultText);
+
+      resultButton = document.createElement("button");
+      resultButton.textContent = "Play Again";
+      resultButton.addEventListener("click", () => {location.reload()})
+      result.appendChild(resultButton);
+
+      body.appendChild(result);
     }
   }
 
