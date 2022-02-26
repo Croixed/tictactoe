@@ -44,14 +44,14 @@ const game = (() => {
   }
 
   const makeFooter = (temp) => {
-    result = document.createElement("div");
+    let result = document.createElement("div");
     result.classList.add("footer");
 
-    resultText = document.createElement("div");
+    let resultText = document.createElement("div");
     resultText.textContent = `${temp}!` + " Game Over!";
     result.appendChild(resultText);
 
-    resultButton = document.createElement("button");
+    let resultButton = document.createElement("button");
     resultButton.textContent = "Play Again";
     resultButton.addEventListener("click", () => {location.reload()})
     result.appendChild(resultButton);
@@ -79,9 +79,8 @@ const game = (() => {
         allsame(slicer(arr, 0, 4, 8)) ||
         allsame(slicer(arr, 2, 4, 6))
         ) {
-      // I should probably make a callback function like returnWinner()  or printWinner()
+      // I should probably make a callback function like returnWinner()  or printWinner() here
       console.log("it's equal");
-      ////////pubNodeList
       gameBoard.pubNodeList.forEach((item) => item.removeEventListener("click", progressGame));
       if (turn === "two") {
         makeFooter(`${playerOne.name} won`);
@@ -101,7 +100,7 @@ const game = (() => {
       playTurn(item, "O", playerOne.name, "one")
     }
     checkWinner(gameBoard.gameArray); // this can't possibly be the best way to check for gameover
-    if (counter === 9) { // if all 9 are filled, display the result footer then exit progressGame
+    if (counter === 9 && !document.querySelector(".footer")) { // if all 9 are filled and there's no footer, then it's a tie
       makeFooter('tie')
       return
     };
