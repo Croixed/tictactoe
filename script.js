@@ -1,6 +1,6 @@
 
 const gameBoard = (() => {
-  const gameArray = ['', '', '', '', '', '', '', '', ''];
+  const gameArray = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
   const pubNodeList = document.querySelectorAll('.index');
   // pubNodeList.forEach(attachHandler);
   return {gameArray, pubNodeList};
@@ -61,28 +61,41 @@ const game = (() => {
 
 
   let allsame = function(arr) {return arr.every(function (e){return e == arr[0]})};
+  let slicer = function(arr, ind1, ind2, ind3) {
+    let newArr = [];
+    newArr.push(arr[ind1]);
+    newArr.push(arr[ind2]);
+    newArr.push(arr[ind3]);
+    return newArr
+  }
+  let counter = 0;
 
   const progressGame = (item, index) => {
     // update clicked tile textContent
     console.log(item.target);
+    counter++
+    console.log(counter);
     if (turn === "one") {
       playTurn(item, "X", "name2", "two")
     } else {
       playTurn(item, "O", "name1", "one")
     }
     // if all 9 tiles are filled, display the result footer
-    if (gameBoard.gameArray.every(i => i)) {makeFooter();}
-
-
-    // or if someone wins early
-    // console.log(allsame2(gameBoard.gameArray.slice(0,2)))
-    if (  allsame(gameBoard.gameArray.slice(3,6))   ) {
-      console.log("it's equal")
+    //if (gameBoard.gameArray.every(i => i)) {makeFooter();}
+    if (counter === 9) {makeFooter();};
+    // this can't possibly be the best way to check for gameover
+    if (allsame(gameBoard.gameArray.slice(3,6)) ||  
+        allsame(gameBoard.gameArray.slice(0,3)) ||
+        allsame(gameBoard.gameArray.slice(6,9)) ||
+        allsame(slicer(gameBoard.gameArray, 0, 3, 6)) ||
+        allsame(slicer(gameBoard.gameArray, 1, 4, 7)) ||
+        allsame(slicer(gameBoard.gameArray, 2, 5, 8)) ||
+        allsame(slicer(gameBoard.gameArray, 0, 4, 8)) ||
+        allsame(slicer(gameBoard.gameArray, 2, 4, 6))
+        ) {
+      console.log("it's equal");
       makeFooter();
-      //arr.every(val => val === arr[0])
-      //someArray.slice(0, 2)
-      //makeFooter();
-    }
+    } 
   }
 
   return {progressGame, attachHandler}
