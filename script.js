@@ -8,6 +8,7 @@ const gameBoard = (() => {
 
 
 const playerFactory = (name) => {
+  const getName = () => prompt("Enter your name: ")
   const sayHi = () => console.log('Hello, name!');
   return {name, sayHi};
 };
@@ -26,7 +27,11 @@ const game = (() => {
   const attachHandler = (item, index) => {
     // console.log(index);
     // console.log(item);
-    item.addEventListener("click", changeTile);
+    item.addEventListener("click", progressGame);
+  }
+
+  const reset = () => {
+
   }
 
   const playTurn = (item, symbol, player, toggle) => {
@@ -54,7 +59,10 @@ const game = (() => {
     body.appendChild(result);
   }
 
-  const changeTile = (item, index) => {
+
+  let allsame = function(arr) {return arr.every(function (e){return e == arr[0]})};
+
+  const progressGame = (item, index) => {
     // update clicked tile textContent
     console.log(item.target);
     if (turn === "one") {
@@ -62,13 +70,22 @@ const game = (() => {
     } else {
       playTurn(item, "O", "name1", "one")
     }
-    // if all 9 tiles are filled, display the result footer, or if someone wins early
-    if (gameBoard.gameArray.every(i => i)) {
+    // if all 9 tiles are filled, display the result footer
+    if (gameBoard.gameArray.every(i => i)) {makeFooter();}
+
+
+    // or if someone wins early
+    // console.log(allsame2(gameBoard.gameArray.slice(0,2)))
+    if (  allsame(gameBoard.gameArray.slice(3,6))   ) {
+      console.log("it's equal")
       makeFooter();
+      //arr.every(val => val === arr[0])
+      //someArray.slice(0, 2)
+      //makeFooter();
     }
   }
 
-  return {changeTile, attachHandler}
+  return {progressGame, attachHandler}
 })();
 
 
