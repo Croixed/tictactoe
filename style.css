@@ -4,6 +4,13 @@
   background-color: slategray;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+
 .gameboard {
   padding: 20px; 
   box-sizing: border-box;
@@ -14,6 +21,21 @@
   display: grid;
   grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
   gap: 4px;
+}
+
+.title, 
+.turn {
+  color: white;
+  width: 340px;
+  margin: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 1.2rem;
+}
+
+.turn {
+  font-size: 1rem;
 }
 
 .index {

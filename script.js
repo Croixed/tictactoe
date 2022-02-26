@@ -24,6 +24,7 @@ const game = (() => {
 
   const privFunc = (item, index) => {item.textContent = '_'}
   let turn = "one";
+  const turnElement = document.querySelector(".turn");
 
   const fillBoard = () => {
     gameBoard.pubNodeList.forEach(privFunc);
@@ -43,10 +44,12 @@ const game = (() => {
       console.log("x");
       item.target.textContent = 'X';
       turn = "two";
+      turnElement.textContent = 'it is now player two\'s turn'
     } else {
       console.log("o");
       item.target.textContent = 'O';
       turn = "one";
+      turnElement.textContent = 'it is now player one\'s turn'
     }
     //item.target.textContent = 'X';
   }
