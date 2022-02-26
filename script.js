@@ -68,6 +68,7 @@ const game = (() => {
     newArr.push(arr[ind3]);
     return newArr
   }
+  // this is an absolute mess??
   let checkWinner = function(arr) {
     if (allsame(arr.slice(3,6)) ||  
         allsame(arr.slice(0,3)) ||
@@ -80,6 +81,8 @@ const game = (() => {
         ) {
       // I should probably make a callback function like returnWinner()  or printWinner()
       console.log("it's equal");
+      ////////pubNodeList
+      gameBoard.pubNodeList.forEach((item) => item.removeEventListener("click", progressGame));
       if (turn === "two") {
         makeFooter(`${playerOne.name} won`);
       } else {
@@ -97,11 +100,11 @@ const game = (() => {
     } else {
       playTurn(item, "O", playerOne.name, "one")
     }
+    checkWinner(gameBoard.gameArray); // this can't possibly be the best way to check for gameover
     if (counter === 9) { // if all 9 are filled, display the result footer then exit progressGame
       makeFooter('tie')
       return
     };
-    checkWinner(gameBoard.gameArray); // this can't possibly be the best way to check for gameover
   }
 
   return {progressGame, attachHandler}
@@ -112,4 +115,3 @@ const playerOne = playerFactory('Player one');
 const playerTwo = playerFactory('Player two');
 
 gameBoard.pubNodeList.forEach(game.attachHandler);
-// gameBoard.pubNodeList.forEach(item.addEventListener("click", game.changeTile));
