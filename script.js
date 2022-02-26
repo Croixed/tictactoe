@@ -1,7 +1,16 @@
 
 const gameBoard = (() => {
   const gameArray = ['', '', '', '', '', '', '', '', ''];
-  return {gameArray};
+  const pubNodeList = document.querySelectorAll('.index');
+  const attachHandler = (item) => {
+    console.log(item);
+    item.addEventListener("click", handlerResponse);
+  }
+  const handlerResponse = () => {console.log('hii')}
+  pubNodeList.forEach(attachHandler);
+  
+  return {gameArray, pubNodeList};
+  
 })();
 
 
@@ -13,31 +22,33 @@ const playerFactory = (name) => {
 
 const displayController = (() => {
   const pubVar = 'public hi';
-  const pubNodeList = document.querySelectorAll('.index');
+  
 
-  const privFunc = (item, index) => {
+/*   const privFunc = (item, index) => {
     item.textContent = '_';
-    // console.log(index);
   }
   const fillBoard = () => {
     pubNodeList.forEach(privFunc);
     pubNodeList.forEach(attachHandler);
-  }
-  const attachHandler = (item) => {
-    console.log(item);
-    item.addEventListener("click", someFunc);
-  }
-  const someFunc = () => {console.log('hi')}
-  return {pubVar, pubNodeList, fillBoard};
+  } */
+  return {pubVar};
 })();
 
 
 const game = (() => {
+
+  const privFunc = (item, index) => {item.textContent = '_'}
+
+  const fillBoard = () => {
+    gameBoard.pubNodeList.forEach(privFunc);
+  }
+
+
   const changeTile = () => {
     // update clicked tile textContent
     console.log('tile updated');
   }
-  return {changeTile}
+  return {changeTile, fillBoard}
 })();
 
 
@@ -46,4 +57,5 @@ const playerOne = playerFactory('Todd');
 const playerTwo = playerFactory('John');
 
 
-displayController.fillBoard();
+// displayController.fillBoard();
+game.fillBoard();
