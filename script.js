@@ -9,7 +9,10 @@ const gameBoard = (() => {
     item.addEventListener("click", handlerLog);
   }
 
-  const handlerLog = (e) => {console.log(e.target.classList[1])}
+  const handlerLog = (e) => {
+    console.log(e.target.classList[1])
+    e.target.textContent = 'X';
+  }
   pubNodeList.forEach(attachHandler);
   
   return {gameArray, pubNodeList};
