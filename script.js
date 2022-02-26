@@ -13,9 +13,9 @@ const gameBoard = (() => {
     console.log(e.target.classList[1])
     e.target.textContent = 'X';
   }
-  pubNodeList.forEach(attachHandler);
+  // pubNodeList.forEach(attachHandler);
   
-  return {gameArray, pubNodeList};
+  return {gameArray, pubNodeList, attachHandler};
   
 })();
 
@@ -53,6 +53,7 @@ const game = (() => {
 const playerOne = playerFactory('Todd');
 const playerTwo = playerFactory('John');
 
+gameBoard.pubNodeList.forEach(gameBoard.attachHandler);
 
 // displayController.fillBoard();
 game.fillBoard();
