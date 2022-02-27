@@ -6,32 +6,27 @@ const gameBoard = (() => {
   return {gameArray, pubNodeList};
 })();
 
-
 const playerFactory = (name) => {
   const getName = () => prompt("Enter your name: ")
   const sayHi = () => console.log('Hello, name!');
   return {name, sayHi};
 };
 
-
 // const displayController = (() => {
 //   const pubVar = '???';
 //   return {pubVar};
 // })();
-
 
 const game = (() => {
   const body = document.querySelector("body");
   let turn = "one";
   const turnElement = document.querySelector(".turn");
   const attachHandler = (item, index) => {
-    // console.log(index);
-    // console.log(item);
     item.addEventListener("click", progressGame);
   }
 
   const reset = () => {
-
+    // reset all the vars instead of using location.reload();
   }
 
   const playTurn = (item, symbol, player, toggle) => {
@@ -57,19 +52,19 @@ const game = (() => {
     result.appendChild(resultButton);
 
     body.appendChild(result);
+    turnElement.textContent = 'Game Over!';
   }
 
-
-  let allsame = function(arr) {return arr.every(function (e){return e == arr[0]})};
-  let slicer = function(arr, ind1, ind2, ind3) {
-    let newArr = [];
+  const allsame = function(arr) {return arr.every(function (e){return e == arr[0]})};
+  const slicer = function(arr, ind1, ind2, ind3) {
+    const newArr = [];
     newArr.push(arr[ind1]);
     newArr.push(arr[ind2]);
     newArr.push(arr[ind3]);
     return newArr
   }
   // this is an absolute mess??
-  let checkWinner = function(arr) {
+  const checkWinner = function(arr) {
     if (allsame(arr.slice(3,6)) ||  
         allsame(arr.slice(0,3)) ||
         allsame(arr.slice(6,9)) ||
@@ -89,10 +84,11 @@ const game = (() => {
       }
     } 
   }
+
   let counter = 0;
 
   const progressGame = (item, index) => {
-    // update clicked tile textContent //(item.target)
+    // update clicked tile textContent 
     counter++
     if (turn === "one") {
       playTurn(item, "X", playerTwo.name, "two")
@@ -105,10 +101,8 @@ const game = (() => {
       return
     };
   }
-
   return {progressGame, attachHandler}
 })();
-
 
 const playerOne = playerFactory('Player one');
 const playerTwo = playerFactory('Player two');
